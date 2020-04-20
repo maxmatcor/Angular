@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 
 export class ChatComponent {
-  public nombre ='sdfsdf'
+  public lstMessage: string[] = ["hola3", "hola2"];
 }
