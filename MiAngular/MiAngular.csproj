@@ -26,10 +26,12 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\chat\chat.component.ts" />
+    <None Remove="ClientApp\src\app\message\message.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\chat\chat.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\message\message.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
