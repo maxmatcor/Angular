@@ -1,4 +1,7 @@
+
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-todo-form',
@@ -6,10 +9,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./todo-form.component.css']
 })
 export class TodoFormComponent implements OnInit {
+  todoForm: FormGroup;
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder,
+              public activeModal: NgbActiveModal) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.todoForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      done: false
+    });
   }
+  saveTodo() {
+    // Validar el formulario
+    if (this.todoForm.invalid) {
+        return;
+    }
 
+   // Enviar la información hacia Firebase
+   }
 }
