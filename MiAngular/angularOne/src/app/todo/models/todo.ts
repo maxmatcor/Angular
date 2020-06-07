@@ -4,4 +4,5 @@ export interface Todo {
     done: boolean;
     createdDate: Date;
     lastModifiedDate: Date;
+    userId: string;
  }

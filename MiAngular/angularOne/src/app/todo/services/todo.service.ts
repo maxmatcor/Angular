@@ -14,9 +14,10 @@ export class TodoService {
 
  private todoCollectionName = 'todos';
 
- getTodos(): Observable<firebase.firestore.QuerySnapshot> {
-  return this.db.collection<Todo>(this.todoCollectionName, ref => ref.orderBy('lastModifiedDate', 'desc')).get();
- }
+ getTodos(userId: string): Observable<firebase.firestore.QuerySnapshot>{
+    return this.db.collection<Todo>(this.todoCollectionName, ref => 
+        ref.where('userId', '==', userId).orderBy('lastModifiedDate', 'desc'))
+      .get(); }
 
  saveTodo(todo: Todo): Promise<DocumentReference> {
   return this.db.collection(this.todoCollectionName).add(todo);

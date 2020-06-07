@@ -3,6 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
 import { TodoService } from '../services/todo.service';
 import { TodoViewModel } from '../models/todo-view-model';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from 'firebase';
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
@@ -10,22 +12,31 @@ import { TodoViewModel } from '../models/todo-view-model';
 })
 export class TodoListComponent implements OnInit {
 
-  constructor(private todoService: TodoService,
-              private modalService: NgbModal) { }
-  todos: TodoViewModel[] = [];
+  user: User;
+  todos: any[];
+  handleModalTodoFormClose: any;
+  constructor(private modalService: NgbModal,
+              private todoService: TodoService,
+              private afAuth: AngularFireAuth) { }
 
-  ngOnInit(): void {
-    this.loadTodos();
+
+  ngOnInit(){
+    this.afAuth.user.subscribe(user => {
+      if (user) {
+        this.loadTodos(user.uid);
+    }
+  });
   }
 
-  loadTodos() {
-    this.todoService.getTodos().subscribe(response => {
+    // tslint:disable-next-line: align
+    loadTodos(userId: string) {
+    this.todoService.getTodos(userId).subscribe(response => {
       this.todos = [];
       response.docs.forEach(value => {
         const data = value.data();
         const id = value.id;
         const todo: TodoViewModel = {
-          id: id,
+          Id: id,
           title: data.title,
           description: data.description,
           done: data.done,
@@ -36,31 +47,20 @@ export class TodoListComponent implements OnInit {
       });
     });
 }
-  clickAddTodo() {
+clickAddTodo() {
     const modal = this.modalService.open(TodoFormComponent);
     modal.result.then(
       this.handleModalTodoFormClose.bind(this),
        this.handleModalTodoFormClose.bind(this));
   }
-  checkedDone(index: number) {
+checkedDone(index: number) {
     const newDoneValue = !this.todos[index].done;
     this.todos[index].done = newDoneValue;
     const obj = { done: newDoneValue };
     const id = this.todos[index].id;
     this.todoService.editTodoPartial(id, obj);
    }
-   handleModalTodoFormClose(response) {
-    // is response an object?
-    if (response === Object(response)) {
-      if (response.createMode) {
-        response.todo.id = response.id;
-        this.todos.unshift(response.todo);
-      } else {
-        let index = this.todos.findIndex(value => value.id == response.id);
-        this.todos[index] = response.todo;
-      }
-    }
-}
+
 
 handleEditClick(todo: TodoViewModel) {
   const modal = this.modalService.open(TodoFormComponent);
@@ -78,4 +78,6 @@ handleDeleteClick(todoId: string, index: number) {
     })
     .catch(err => console.error(err));
 }
+
 }
+

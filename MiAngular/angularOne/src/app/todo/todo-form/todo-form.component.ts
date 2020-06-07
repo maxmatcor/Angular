@@ -6,17 +6,20 @@ import { TodoService } from '../services/todo.service';
 import { DocumentReference } from '@angular/fire/firestore/interfaces';
 import { Todo } from '../models/todo';
 import { TodoViewModel } from '../models/todo-view-model';
-
+import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from 'firebase';
 @Component({
   selector: 'app-todo-form',
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.css']
 })
 export class TodoFormComponent implements OnInit {
+  user: User;
 
   constructor(private formBuilder: FormBuilder,
               public activeModal: NgbActiveModal,
-              private todoService: TodoService) { }
+              private todoService: TodoService,
+              private afAuth: AngularFireAuth) { }
   todoForm: FormGroup;
    createMode = true;
 todo: TodoViewModel;
@@ -28,6 +31,12 @@ ngOnInit() {
   });
 
   if (!this.createMode) { this.loadTodo(this.todo); }
+
+  this.afAuth.user.subscribe(user => {
+     if (user){
+       this.user = user;
+     }
+   });
 }
 
 loadTodo(todo) {
@@ -42,6 +51,7 @@ saveTodo() {
      const todo: Todo = this.todoForm.value;
      todo.lastModifiedDate = new Date();
      todo.createdDate = new Date();
+     todo.userId = this.user.uid;
      this.todoService.saveTodo(todo)
        .then(response => this.handleSuccessfulSaveTodo(response, todo))
        .catch(err => console.error(err));

@@ -13,6 +13,8 @@ import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoFormComponent } from './todo/todo-form/todo-form.component';
 import { MenuComponent } from './menu/menu.component';
 import { ContactComponent } from './contact/contact.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +22,14 @@ import { ContactComponent } from './contact/contact.component';
     TodoListComponent,
     TodoFormComponent,
     MenuComponent,
-    ContactComponent
+    ContactComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig), // Import firebase
     AngularFirestoreModule, // Import firestore
+    AngularFireAuthModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule
