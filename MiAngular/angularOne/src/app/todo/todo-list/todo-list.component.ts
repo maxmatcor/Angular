@@ -36,11 +36,13 @@ export class TodoListComponent implements OnInit {
         const data = value.data();
         const id = value.id;
         const todo: TodoViewModel = {
-          Id: id,
+          id: id,
           title: data.title,
           description: data.description,
           done: data.done,
-          lastModifiedDate: data.lastModifiedDate.toDate()
+          createdDate: data.createdDate,
+          lastModifiedDate: data.lastModifiedDate.toDate(),
+          userId: data.userId
         };
 
         this.todos.push(todo);
