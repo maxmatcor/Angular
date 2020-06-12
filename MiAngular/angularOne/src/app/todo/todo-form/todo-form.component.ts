@@ -66,7 +66,8 @@ saveTodo() {
 }
 
 handleSuccessfulSaveTodo(response: DocumentReference, todo: Todo) {
-   this.activeModal.dismiss({ todo, id: response.id, createMode: true });
+   this.activeModal.dismiss({ todo, id: response.id, createMode: true
+   });
 }
 
 handleSuccessfulEditTodo(todo: TodoViewModel) {
