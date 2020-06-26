@@ -1,4 +1,40 @@
-<app-menu *ngIf="user"></app-menu>
-<div class="container-fluid">
-   <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  >
+    <mat-toolbar>Menu</mat-toolbar>
+
+    <mat-nav-list>
+      <a *ngIf="user"></a>
+      <a mat-list-item routerLink="">Home</a>
+      <a mat-list-item routerLink="contact">Contact</a>
+      <input
+        type="button"
+        class="btn btnPrimary"
+        value="Log Out"
+        (click)="logout()"
+      />
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="navbar-brand js-scroll-trigger" routerLink=""
+        >Task Notes</span
+      >
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

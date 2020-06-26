@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire'; // Firebase config
 import { AngularFirestoreModule } from '@angular/fire/firestore'; // For Cloud Firestore
@@ -15,6 +14,15 @@ import { MenuComponent } from './menu/menu.component';
 import { ContactComponent } from './contact/contact.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
+import { FooterComponent } from './footer/footer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +31,8 @@ import { LoginComponent } from './login/login.component';
     TodoFormComponent,
     MenuComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,11 +40,18 @@ import { LoginComponent } from './login/login.component';
     AngularFirestoreModule, // Import firestore
     AngularFireAuthModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
     NgbModule,
-    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [TodoFormComponent]
+  entryComponents: [TodoFormComponent],
 })
-export class AppModule { }
+export class AppModule {}
