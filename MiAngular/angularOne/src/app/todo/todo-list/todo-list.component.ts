@@ -5,6 +5,7 @@ import { TodoViewModel } from '../models/todo-view-model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
@@ -14,6 +15,14 @@ export class TodoListComponent implements OnInit {
   user: User;
   todos: any[];
   handleModalTodoFormClose: any;
+  displayedColumns: string[] = [
+    'done',
+    'title',
+    'description',
+    'createDate',
+    'buttons',
+  ];
+  dataSource = new MatTableDataSource();
   constructor(
     private modalService: NgbModal,
     private todoService: TodoService,
@@ -36,7 +45,7 @@ export class TodoListComponent implements OnInit {
         const data = value.data();
         const id = value.id;
         const todo: TodoViewModel = {
-          id: id,
+          id,
           title: data.title,
           description: data.description,
           done: data.done,
@@ -46,6 +55,7 @@ export class TodoListComponent implements OnInit {
         };
 
         this.todos.push(todo);
+        this.dataSource.data = this.todos;
       });
     });
   }

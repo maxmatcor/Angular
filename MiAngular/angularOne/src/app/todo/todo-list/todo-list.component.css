@@ -1,8 +1,21 @@
-
-.btn-edit{
-    margin-right: 5px;
+.btn-edit {
+  margin-right: 10px;
 }
 
-.done{
-    text-decoration: line-through;
+.done {
+  text-decoration: line-through;
+}
+.mat-success {
+  background-color: #1abc9c;
+  color: #fff;
+}
+
+.mat-header-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-cell {
+  text-align: center;
+  justify-content: center;
 }
